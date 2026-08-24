@@ -1,0 +1,39 @@
+name: Reproducible bug
+description: Report a bug in a public Prufyx artifact without sensitive data.
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Do not include credentials, Secrets, production snapshots, customer identifiers, or confidential configuration. Report suspected vulnerabilities by email instead.
+  - type: input
+    id: repository
+    attributes:
+      label: Repository and version
+      placeholder: prufyx/example at v0.1.0 or commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal sanitized reproduction
+      description: Include exact commands, fixture identifiers, expected result, and actual result.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Declared scope and omissions
+      description: State which Kubernetes, component, configuration, and environment predicates are relevant and which data was omitted.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Data safety
+      options:
+        - label: I removed credentials, Secrets, customer data, and confidential configuration.
+          required: true
+        - label: This is not a vulnerability report.
+          required: true

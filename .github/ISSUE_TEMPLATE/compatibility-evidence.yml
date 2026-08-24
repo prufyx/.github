@@ -1,0 +1,58 @@
+name: Compatibility evidence
+description: Propose a source-linked compatibility claim or a sanitized reproducer.
+title: "evidence: "
+labels:
+  - evidence
+body:
+  - type: markdown
+    attributes:
+      value: A version pair alone is not enough. Include the relevant deployment mode, options, dependencies, evidence type, and exact source span. Never submit customer data.
+  - type: input
+    id: transition
+    attributes:
+      label: Exact transition
+      placeholder: Kubernetes 1.33 to 1.34, component 2.4 to 2.5
+    validations:
+      required: true
+  - type: textarea
+    id: predicates
+    attributes:
+      label: Matching configuration and environment predicates
+      description: Include only minimized and sanitized values needed to distinguish the claim.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Source or reproduced evidence
+      description: Link the exact upstream document and section, or describe the reproducible test and artifact digests.
+    validations:
+      required: true
+  - type: dropdown
+    id: evidence_type
+    attributes:
+      label: Evidence type
+      options:
+        - Official upstream source
+        - Deterministic rule
+        - Reproduced test
+        - Observation
+        - Hypothesis requiring validation
+    validations:
+      required: true
+  - type: textarea
+    id: unknowns
+    attributes:
+      label: Unknowns and invalidation conditions
+      description: State missing evidence and what would make this claim no longer applicable.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Data and rights
+      options:
+        - label: The submission contains no customer data, credentials, Secrets, or confidential configuration.
+          required: true
+        - label: I am permitted to share the linked or attached material.
+          required: true
