@@ -3,67 +3,51 @@
     <img src="assets/prufyx-mark.svg" width="88" height="88" alt="Prufyx mark">
   </a>
   <h1>Prufyx</h1>
-  <p><strong>Know what will break before the cluster changes.</strong></p>
-  <p>Kubernetes change validation for the bundle you actually run.</p>
+  <p><strong>Check the declared mode before you upgrade Prometheus.</strong></p>
+  <p>Experimental, local-first compatibility checks with explicit evidence boundaries.</p>
   <p>
     <a href="https://prufyx.com">Website</a> ·
-    <a href="https://prufyx.com/#waitlist">Private preview</a> ·
-    <a href="mailto:hello@prufyx.com">Contact</a>
+    <a href="https://github.com/prufyx/prufyx-cli">Source</a> ·
+    <a href="https://github.com/prufyx/prufyx-cli/releases/tag/v0.1.0-alpha.3">v0.1.0-alpha.3</a> ·
+    <a href="https://github.com/prufyx/prufyx-cli/blob/v0.1.0-alpha.3/CONTRIBUTING.md">Contribute</a>
   </p>
 </div>
 
-## Kubernetes changes are bundle problems
+## First public Community alpha
 
-A Kubernetes upgrade rarely changes Kubernetes alone. It changes a system of CNI, CSI, DNS, ingress, admission, observability, GitOps, operating-system, runtime, provider, version, and configuration choices.
+Prufyx CLI v0.1.0-alpha.3 answers one bounded question: does an exact proposed Prometheus 3.1.0 declaration preserve the observed declared Agent or Server mode from Prometheus 2.55.1?
 
-Prufyx is being built to evaluate the exact transition:
+The released slice accepts only the reviewed Linux `arm64/v8` image manifests and exact proposed declaration grammar. It returns a scoped `PASS`, `ATTENTION`, or `UNKNOWN`. Every completed assessment keeps the whole-upgrade aggregate `UNKNOWN` and exits `11`.
 
-```text
-validate(current_bundle, proposed_bundle, policy_profile, knowledge_revision)
+Try the checked no-cluster synthetic demonstration with Git, Go 1.26.8 or newer, and Python 3 installed:
+
+```sh
+git clone https://github.com/prufyx/prufyx-cli.git
+cd prufyx-cli
+git checkout v0.1.0-alpha.3
+./examples/prometheus-mode/run.sh
 ```
 
-The result is scoped: which claims pass, what blocks the change, what remains unknown, and which source or reproducible test supports each conclusion.
-
-## What we are building
-
-| Capability | Purpose | Status |
-| --- | --- | --- |
-| Local snapshot and inspection | Capture a minimized, content-addressed description of the relevant environment | Early local tooling |
-| Configuration-aware compatibility graph | Bind version claims to deployment modes, options, dependencies, and environment predicates | Planned |
-| Source-linked knowledge bundles | Preserve exact release-note, changelog, documentation, and test provenance | Planned |
-| Reproducible validation backends | Test high-impact component and Kubernetes transitions against declared fidelity boundaries | Planned |
-| Replayable TestRecords | Record inputs, assertions, artifacts, evidence, and invalidation conditions | Planned |
-| Release workflow guardrails | Return a scoped decision to customer-owned CI/CD and GitOps workflows | Enterprise, planned |
-
-## How a decision earns trust
+Expected scoped output:
 
 ```text
-upstream source + matching configuration predicate + reproduced test
-                              |
-                              v
-                    scoped compatibility claim
+PASS      current=Agent proposed=Agent aggregate=UNKNOWN exit=11
+ATTENTION current=Agent proposed=Server aggregate=UNKNOWN exit=11
+UNKNOWN   current=Agent proposed=unresolved aggregate=UNKNOWN exit=11
 ```
 
-- `PASS` applies only to the named claim and evidence policy.
-- `BLOCKED` includes the matching constraint and a concrete remediation.
-- `UNKNOWN` identifies the missing evidence and the next bounded test.
-- A model may extract, retrieve, compare, and explain. It does not authorize a release.
-- Final apply, sync, promotion, and rollout remain customer-owned.
+The demonstration is explicitly synthetic and non-authoritative. It uses no cluster, account, network, model, or clock. Real read-only collection is a separate opt-in path.
 
-## Design principles
+## Exact boundary
 
-- Local-first and disconnected-capable evaluation
-- Exact current-bundle to proposed-bundle comparison
-- Configuration and deployment mode, not versions alone
-- Explicit unknowns instead of inferred confidence
-- Source spans and test receipts for material claims
-- No raw Secrets, credentials, or unrestricted cluster objects
-- Independently replayable decisions without a hosted model
+- `PASS` covers declared mode preservation for the exact reviewed transition.
+- The CLI does not prove process startup, applied runtime mode, data safety, remote-write behavior, rollback, or whole-upgrade compatibility.
+- Unsupported versions, architectures, images, wrappers, arguments, and incomplete evidence remain `UNKNOWN` after valid input admission.
+- Invalid or substituted input bytes are integrity errors.
+- Evaluation stays local. The CLI does not apply, patch, delete, promote, or roll out a workload.
 
-## Current status
+Read the [Prometheus mode contract](https://github.com/prufyx/prufyx-cli/blob/v0.1.0-alpha.3/cli/docs/prometheus-mode.md), [security policy](https://github.com/prufyx/prufyx-cli/blob/v0.1.0-alpha.3/SECURITY.md), and [contribution guide](https://github.com/prufyx/prufyx-cli/blob/v0.1.0-alpha.3/CONTRIBUTING.md).
 
-Prufyx is in early development. Public repositories will open in stages. Today we are validating the product with concrete Kubernetes and component transitions, not claiming universal coverage or production safety.
-
-If your team operates a Kubernetes fleet and spends days researching or repeating upgrade validation, [bring us one real change](https://prufyx.com/#waitlist). We want to compare Prufyx with the process you use today.
+Prufyx is maintained by Spas Atanasov and released under the [Apache License 2.0](https://github.com/prufyx/prufyx-cli/blob/v0.1.0-alpha.3/LICENSE).
 
 <p align="center"><strong>Evidence before confidence.</strong></p>
