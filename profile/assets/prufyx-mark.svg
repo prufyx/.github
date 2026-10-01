@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Prufyx">
+  <style>
+    .field { fill: #f4f7fb; }
+    .ink { fill: none; stroke: #171a23; }
+    .notch { fill: #3451c6; }
+    @media (prefers-color-scheme: dark) {
+      .field { fill: #20242f; }
+      .ink { stroke: #f4f7fb; }
+    }
+  </style>
+  <rect class="field" width="96" height="96" rx="6"/>
+  <path class="ink" d="M21 24v48m0-48h12M21 72h12M21 48h54" stroke-width="7" stroke-linecap="square"/>
+  <path class="notch" d="M60 39v18h7V39z"/>
+  <path class="ink" d="M75 39v18" stroke-width="7" stroke-linecap="square"/>
+</svg>
