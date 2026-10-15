@@ -18,8 +18,17 @@
 Prufyx evaluates local inputs offline. It does not upload values or
 observations, and it needs no account or hosted model. Every rule is reviewed
 by a person and cites the exact upstream commit and line range it relies on.
-The current corpus covers Kubernetes API removals and reviewed transitions for
-more than 60 CNCF and community projects.
+The current corpus covers Kubernetes API removals and reviewed transitions:
+190 active source rules across 53 CNCF projects and 34 rules across 8 further,
+non-CNCF projects (65 projects with at least one executable check in total).
+
+Coverage of recent upgrades is lower than that rule count suggests. Across the
+last five minor upgrades of 55 projects (275 upgrades between consecutive
+release lines), none is yet decided for the whole release-line pair, 44 (16%)
+have a rule for one exact version pair only, and 231 (84%) have no valid rule.
+The figures are generated from the shipped rules as of 2026-10-15; the
+definitions are in the
+[coverage section of the README](https://github.com/prufyx/prufyx#coverage).
 
 Every outcome is bound to its named claim. `BLOCKED` identifies a matching
 constraint and remediation. `UNKNOWN` keeps missing or ambiguous evidence
